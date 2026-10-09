@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoSense AI - Interactive Vehicle Diagnostics</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-6 font-sans">
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <!-- Header -->
+    <header class="flex items-center justify-between border-b border-slate-800 pb-5">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🚗</span>
+          <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">
+            AutoSense AI
+          </h1>
+          <span class="bg-emerald-500/10 text-emerald-400 text-xs px-2.5 py-1 rounded-full border border-emerald-500/20 font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ML Service Live (Port 8005)
+          </span>
+        </div>
+        <p class="text-slate-400 text-sm mt-1">Intelligent Vehicle Symptom & Fault Diagnostic System</p>
+      </div>
+      <div class="text-right text-xs text-slate-400">
+        <div>Model: <span class="text-slate-200 font-mono">RandomForest + Rules</span></div>
+        <div>Trained Accuracy: <span class="text-emerald-400 font-mono font-semibold">98.12%</span></div>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Input Panel (Left) -->
+      <div class="lg:col-span-5 space-y-5">
+        <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-lg backdrop-blur-sm space-y-4">
+          <h2 class="text-base font-semibold text-slate-200 flex items-center gap-2">
+            <span>📋</span> Diagnostic Input Panel
+          </h2>
+
+          <!-- Vehicle Meta -->
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Vehicle</label>
+            <div class="grid grid-cols-3 gap-2">
+              <input id="vMake" type="text" value="Maruti" class="bg-slate-900/80 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500" placeholder="Make">
+              <input id="vModel" type="text" value="Swift" class="bg-slate-900/80 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500" placeholder="Model">
+              <input id="vYear" type="number" value="2020" class="bg-slate-900/80 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500" placeholder="Year">
+            </div>
+          </div>
+
+          <!-- Symptom Selection -->
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Select Observed Symptoms</label>
+            <div class="grid grid-cols-2 gap-1.5 text-xs max-h-48 overflow-y-auto pr-1">
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="difficult starting" class="symptom-check accent-blue-500" checked>
+                <span>Difficult starting</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="clicking sound" class="symptom-check accent-blue-500" checked>
+                <span>Clicking sound</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="dim headlights" class="symptom-check accent-blue-500" checked>
+                <span>Dim headlights</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="battery warning" class="symptom-check accent-blue-500" checked>
+                <span>Battery warning</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="engine overheating" class="symptom-check accent-blue-500">
+                <span>Overheating</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="brake noise" class="symptom-check accent-blue-500">
+                <span>Brake noise</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="engine vibration" class="symptom-check accent-blue-500">
+                <span>Engine vibration</span>
+              </label>
+              <label class="flex items-center gap-2 bg-slate-900/40 p-2 rounded border border-slate-700/40 cursor-pointer hover:bg-slate-700/30">
+                <input type="checkbox" value="poor acceleration" class="symptom-check accent-blue-500">
+                <span>Poor acceleration</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- DTC Codes -->
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">OBD-II DTC Codes (Comma-separated)</label>
+            <input id="dtcInput" type="text" value="P0562" class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500" placeholder="e.g. P0562, P0300">
+          </div>
+
+          <!-- Sensor Readings -->
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Live Sensor Telemetry</label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div>
+                <span class="text-slate-400">Battery (V):</span>
+                <input id="sensorBattery" type="number" step="0.1" value="11.2" class="w-full mt-0.5 bg-slate-900/80 border border-slate-700 rounded px-2.5 py-1 text-slate-200 focus:outline-none focus:border-blue-500">
+              </div>
+              <div>
+                <span class="text-slate-400">Coolant Temp (°C):</span>
+                <input id="sensorTemp" type="number" value="90" class="w-full mt-0.5 bg-slate-900/80 border border-slate-700 rounded px-2.5 py-1 text-slate-200 focus:outline-none focus:border-blue-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <button id="runBtn" onclick="runDiagnosis()" class="w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium text-sm rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
+            <span>⚡ Run AI Diagnosis</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Panel (Right) -->
+      <div class="lg:col-span-7 space-y-5">
+        <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 shadow-lg backdrop-blur-sm space-y-5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-semibold text-slate-200 flex items-center gap-2">
+              <span>🧠</span> Diagnostic Inference Report
+            </h2>
+            <span id="resultBadge" class="text-xs px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium">
+              Severity: Medium
+            </span>
+          </div>
+
+          <!-- Primary Prediction Card -->
+          <div class="bg-slate-900/60 border border-slate-700/80 rounded-lg p-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="text-xs text-slate-400 font-medium">PRIMARY DIAGNOSED FAULT</div>
+                <div id="primaryFault" class="text-xl font-bold text-white mt-0.5">Battery Failure</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xs text-slate-400 font-medium">AI CONFIDENCE</div>
+                <div id="confidenceVal" class="text-2xl font-black text-blue-400">94.7%</div>
+              </div>
+            </div>
+
+            <!-- Confidence Progress Bar -->
+            <div class="w-full bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
+              <div id="confidenceBar" class="bg-blue-500 h-2 rounded-full transition-all duration-500" style="width: 94.7%"></div>
+            </div>
+          </div>
+
+          <!-- Top-3 Ranked Faults -->
+          <div>
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Top Fault Candidates</h3>
+            <div id="candidatesList" class="space-y-2">
+              <div class="flex items-center justify-between p-2.5 bg-slate-900/40 rounded border border-slate-700/30 text-xs">
+                <span class="font-medium text-slate-200">1. Battery Failure</span>
+                <span class="font-mono text-emerald-400">94.7%</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 bg-slate-900/40 rounded border border-slate-700/30 text-xs">
+                <span class="font-medium text-slate-200">2. Alternator Failure</span>
+                <span class="font-mono text-slate-400">3.6%</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 bg-slate-900/40 rounded border border-slate-700/30 text-xs">
+                <span class="font-medium text-slate-200">3. Air Intake Problem</span>
+                <span class="font-mono text-slate-400">0.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explainable AI (XAI) -->
+          <div>
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Explainable AI (XAI) Rationale</h3>
+            <div id="explanationText" class="text-xs text-slate-300 leading-relaxed bg-slate-900/30 p-3 rounded border border-slate-800">
+              'Battery Failure' is identified as the most probable fault with an AI confidence score of 94.7%. OBD-II diagnostic trouble code(s) [P0562] correlate directly with this subsystem. Significant sensor variance was observed in Battery Voltage.
+            </div>
+          </div>
+
+          <!-- Actionable Mechanic Checks -->
+          <div>
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Recommended Checks</h3>
+            <ul id="checksList" class="text-xs text-slate-300 space-y-1.5 list-disc list-inside bg-slate-900/30 p-3 rounded border border-slate-800">
+              <li>Check battery resting voltage (should be ≥12.4V)</li>
+              <li>Inspect battery terminals for heavy oxidation or loose leads</li>
+              <li>Perform load test on battery cells</li>
+              <li>Verify alternator charging output at idle (13.5V - 14.5V)</li>
+            </ul>
+          </div>
+
+          <!-- Safety Disclaimer -->
+          <div class="p-3 bg-amber-500/5 border border-amber-500/20 rounded-lg text-xs text-amber-200/90 leading-relaxed flex items-start gap-2">
+            <span class="text-amber-400">⚠️</span>
+            <span><strong>Safety Disclaimer:</strong> AutoSense AI provides an estimated preliminary diagnostic assessment for advisory and maintenance-support purposes. It does not replace certified mechanical inspections.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function runDiagnosis() {
+      const btn = document.getElementById('runBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Analyzing telemetry...</span>';
+
+      const symptoms = Array.from(document.querySelectorAll('.symptom-check:checked')).map(el => el.value);
+      const dtcs = document.getElementById('dtcInput').value.split(',').map(s => s.trim()).filter(Boolean);
+      const batt = parseFloat(document.getElementById('sensorBattery').value) || 12.0;
+      const temp = parseFloat(document.getElementById('sensorTemp').value) || 90;
+
+      const payload = {
+        vehicle: {
+          make: document.getElementById('vMake').value,
+          model: document.getElementById('vModel').value,
+          year: parseInt(document.getElementById('vYear').value) || 2020,
+          mileage: 62000
+        },
+        symptoms: symptoms,
+        dtc_codes: dtcs,
+        sensor_data: {
+          battery_voltage: batt,
+          engine_temperature: temp
+        }
+      };
+
+      let data;
+      try {
+        let res;
+        try {
+          res = await fetch('http://127.0.0.1:8005/predict', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } catch (fetchErr) {
+          // Fallback to localhost if 127.0.0.1 was blocked by local origin/loopback policy
+          res = await fetch('http://localhost:8005/predict', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        data = await res.json();
+      } catch (err) {
+        alert('Could not reach the ML service at http://127.0.0.1:8005.\n\nDetails: ' + err.message + '\n\nPlease ensure the Python server is running.');
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡ Run AI Diagnosis</span>';
+        return;
+      }
+
+      // Update UI
+      document.getElementById('primaryFault').textContent = data.primary_fault;
+      document.getElementById('confidenceVal').textContent = data.confidence + '%';
+      document.getElementById('confidenceBar').style.width = Math.min(100, data.confidence) + '%';
+      document.getElementById('explanationText').textContent = data.explanation;
+      document.getElementById('resultBadge').textContent = 'Severity: ' + data.severity;
+
+      // Update candidates
+      const candList = document.getElementById('candidatesList');
+      candList.innerHTML = '';
+      (data.predictions || []).slice(0, 3).forEach((p, idx) => {
+        candList.innerHTML += `
+          <div class="flex items-center justify-between p-2.5 bg-slate-900/40 rounded border border-slate-700/30 text-xs">
+            <span class="font-medium text-slate-200">${idx + 1}. ${p.fault}</span>
+            <span class="font-mono ${idx === 0 ? 'text-emerald-400 font-bold' : 'text-slate-400'}">${p.confidence}%</span>
+          </div>
+        `;
+      });
+
+      // Update checks
+      const checksList = document.getElementById('checksList');
+      checksList.innerHTML = '';
+      const checks = (data.predictions && data.predictions[0] && data.predictions[0].checks) || ['Perform full OBD-II scan with certified mechanic'];
+      checks.forEach(c => {
+        checksList.innerHTML += `<li>${c}</li>`;
+      });
+
+      btn.disabled = false;
+      btn.innerHTML = '<span>⚡ Run AI Diagnosis</span>';
+    }
+  </script>
+</body>
+</html>
